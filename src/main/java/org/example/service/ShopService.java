@@ -37,6 +37,12 @@ public class ShopService {
         return productRepo.getProductsList();
     }
 
+    public void addNewOrder(Order neworder){
+       this. orderRepo.getOrders().add(neworder);
+    }
+
+
+
     public ShopService(ProductRepo productRepo) {
         this.productRepo = productRepo;
     }
