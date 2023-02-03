@@ -33,8 +33,8 @@ public class ShopService {
         return null;
     }
 
-    public List<Product> listProducts(List<Product> productList){
-        return productList;
+    public List<Product> listProducts(){
+        return productRepo.getProductsList();
     }
 
     public ShopService(ProductRepo productRepo) {

@@ -27,17 +27,8 @@ public class OrderRepo {
                 "orders=" + orders +
                 '}';
     }
-
-
-
-
+    
     public void addNewOrder(Order neworder){
         this.orders.add(neworder);
     }
-
-
-
-
-
-
 }

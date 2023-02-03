@@ -10,10 +10,14 @@ public class ProductRepo {
 
 
    private List<Product> productsList= new ArrayList<>();
-   public ProductRepo(){}
 
-   public ProductRepo(List<Product> productsList) {
-      this.productsList = productsList;
+
+   public ProductRepo() {
+      productsList.add(new Product(1, "cheese"));
+      productsList.add(new Product(2, "bread"));
+      productsList.add(new Product(3, "milk"));
+      productsList.add(new Product(4, "coffee"));
+      productsList.add(new Product(5, "tea"));
    }
 
    public List<Product> getProductsList() {
