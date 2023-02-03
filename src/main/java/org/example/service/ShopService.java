@@ -6,12 +6,36 @@ import org.example.repo.OrderRepo;
 import org.example.repo.ProductRepo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShopService {
 
     public OrderRepo orderRepo;
     public ProductRepo productRepo;
 
+
+
+    public Product getProductByName(String productName){
+        for (Product p: productRepo.getProductsList()){
+            if(p.getName().equals(productName)){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public Product getProductById(int productId){
+        for (Product p: productRepo.getProductsList()){
+            if(p.getId() == productId){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public List<Product> listProducts(List<Product> productList){
+        return productList;
+    }
 
     public ShopService(ProductRepo productRepo) {
         this.productRepo = productRepo;
@@ -47,27 +71,4 @@ public class ShopService {
                 '}';
     }
 
-    
-    public Product getProductByName(String productName){
-        for (Product p: productRepo.getProductsList()){
-            if(p.getName().equals(productName)){
-                return p;
-            }
-        }
-        return null;
-    }
-
-    public Product getProductById(int productId){
-        for (Product p: productRepo.getProductsList()){
-            if(p.getId() == productId){
-                return p;
-            }
-        }
-        return null;
-    }
-
-
-    //ProductRepo productRepo = new ProductRepo(new ArrayList<Product>());
-
-    // orderRepo = new OrderRepo(new Order());
 }
