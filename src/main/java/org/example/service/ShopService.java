@@ -10,39 +10,33 @@ import java.util.List;
 
 public class ShopService {
 
-    public OrderRepo orderRepo;
     public ProductRepo productRepo;
-
+    public OrderRepo orderRepo = new OrderRepo(new ArrayList<>());
 
 
     public Product getProductByName(String productName){
-        for (Product p: productRepo.getProductsList()){
+        for (Product p: productRepo.getProducts()){
             if(p.getName().equals(productName)){
                 return p;
             }
         }
-        return null;
+        return null; //throw Exception here
     }
 
     public Product getProductById(int productId){
-        for (Product p: productRepo.getProductsList()){
+        for (Product p: productRepo.getProducts()){
             if(p.getId() == productId){
                 return p;
             }
         }
-        return null;
+        return null; //throw Exception here
     }
 
     public List<Product> listProducts(){
-        return productRepo.getProductsList();
+        return productRepo.getProducts();
     }
 
-    public void addNewOrder(Order neworder){
-       this. orderRepo.getOrders().add(neworder);
-    }
-
-
-
+    //Constructors
     public ShopService(ProductRepo productRepo) {
         this.productRepo = productRepo;
     }
@@ -53,6 +47,7 @@ public class ShopService {
 
     public ShopService(){}
 
+    // Getter and Setter
     public OrderRepo getOrderRepo() {
         return orderRepo;
     }

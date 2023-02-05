@@ -9,10 +9,16 @@ public class OrderRepo {
 
     private List<Order> orders = new ArrayList<>();
 
+    public void add(Order neworder){
+        this.orders.add(neworder);
+    }
+
+    // Constructor
     public OrderRepo(List<Order> orders) {
         this.orders = orders;
     }
 
+    // Getter and Setter
     public List<Order> getOrders() {
         return orders;
     }
@@ -28,7 +34,4 @@ public class OrderRepo {
                 '}';
     }
 
-    public void addNewOrder(Order neworder){
-        this.orders.add(neworder);
-    }
 }

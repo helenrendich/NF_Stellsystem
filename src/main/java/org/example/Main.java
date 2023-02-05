@@ -8,37 +8,135 @@ import org.example.service.ShopService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
         ShopService shopService1 = new ShopService(new ProductRepo());
-        //System.out.println( shopService1.getProductByName("milk"));
-        //System.out.println(shopService1.getProductById(1));
-        //System.out.println(shopService1.listProducts());
+        boolean again = true;
 
+        while (again) {
 
-        shopService1.getProductById(1);
+            printMainMenu();
 
-         ArrayList<Product> products1= new ArrayList<>();
-         products1.add(new Product(2,"bread"));
-         products1.add(new Product(3,"milk"));
+            Scanner INPUT = new Scanner(System.in);
+            String initialInput = INPUT.next().toLowerCase();
 
+            if ("p".equals(initialInput)) {
+                productsToConsole(shopService1);
+                again = mainMenuAgain();
 
-         Order order1 = new Order(1, products1);
-        Order order2 = new Order(2, products1);
-         System.out.println(order1);
+            } else if ("n".equals(initialInput)) {
+                boolean orderAgain = true;
+                ArrayList<Order> orders = new ArrayList<Order>();
+                while(orderAgain) {
+                    newOrderByCustomer(shopService1);
+                    orderAgain= orderAgain();
+                }
+                again = mainMenuAgain();
 
-         //OrderRepo:
-         ArrayList<Order> orders = new ArrayList<Order>();
-          orders.add(order1);
-          orders.add(order2);
-        //shopService1.addNewOrder(order1);
-        System.out.println(orders);
-        //shopService1.addNewOrder(order1);
+            } else if ("b".equals(initialInput)) {
+                ordersToConsole(shopService1);
+                again = mainMenuAgain();
 
+            } else if ("e".equals(initialInput)) {
+                again = false;
 
+            } else {
+                System.out.println("Deine Eingabe ist ungültig. Bitte versuche es erneut.");
+                again = true;
+            }
+        }
 
     }
+
+
+
+
+
+
+    private static void printMainMenu(){
+        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.println("Hi! Wilkommen im Shop Service. Was möchtest du tun?");
+        System.out.println("p für Einzelnes Produkt oder alle Produkte auf der Konsole ausgeben lassen");
+        System.out.println("n für Neue Bestellung aufgeben");
+        System.out.println("b für Einzelne Bestellung oder alle Bestellungen auf der Konsole ausgeben lassen");
+        System.out.println("e für Programm beenden");
+        System.out.println(">>> ");
+    }
+
+    private static boolean mainMenuAgain() {
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+        System.out.println("Möchtest du zurück zum Hauptmenü?");
+        System.out.println("y für Ja, alles Andere für Beenden des Programms");
+        System.out.println(">>> ");
+        String mainMenu = new Scanner(System.in).next().toLowerCase();
+        return "y".equals(mainMenu);
+    }
+
+    private static void productsToConsole (ShopService shopService) {
+        System.out.println("Bitte eine ID eingeben oder 0 für die Liste aller Produkte");
+        System.out.println(">>> ");
+        int id = new Scanner(System.in).nextInt();
+        if(id == 0){
+            System.out.println(shopService.listProducts());
+        } else {
+            System.out.println(shopService.getProductById(id));
+        }
+    }
+
+    private static void newOrderByCustomer (ShopService shopService) {
+
+        System.out.println("ID der Bestellung festlegen (bitte keine 0 vergeben): >>> ");
+        int orderId = new Scanner(System.in).nextInt();
+
+        ArrayList<Product> products= new ArrayList<>();
+        boolean addAnotherProduct = true;
+
+        while (addAnotherProduct){
+            System.out.println("Welches Produkt möchten Sie der Bestellung hinzufügen?");
+            for (Product p: shopService.productRepo.getProducts()){
+                System.out.print(p.getId()+ ":" + p.getName() + "  ");
+            }
+            System.out.println(" ");
+            System.out.println("Bitte ID angeben: >>> ");
+            int productId = new Scanner(System.in).nextInt();
+            Product addedProduct = shopService.getProductById(productId);
+            products.add(addedProduct);
+            System.out.println("Möchten Sie ein weiteres Produkt hinzufügen?");
+            System.out.println("y für Ja, alles Andere für Nein");
+            System.out.println(">>> ");
+            String yesOrNo = new Scanner(System.in).next().toLowerCase();
+            addAnotherProduct = "y".equals(yesOrNo);
+        }
+
+        Order order = new Order(orderId, products);
+        shopService.addNewOrder(order);
+
+    }
+
+    public static boolean orderAgain(){
+        System.out.println("Vielen Dank für die Bestellung. Möchtest du erneut eine Bestellung aufgeben?");
+        System.out.println("y für Ja, alles Andere für Nein");
+        System.out.println(">>> ");
+        String yesOrNo = new Scanner(System.in).next().toLowerCase();
+        return "y".equals(yesOrNo);
+
+    }
+
+    private static void ordersToConsole (ShopService shopService) {
+        System.out.println("Bitte eine ID eingeben oder 0 für die Liste aller Bestellungen");
+        System.out.println(">>> ");
+        int id = new Scanner(System.in).nextInt();
+        if(id == 0){
+            System.out.println(shopService.listOrders());
+        } else {
+            System.out.println(shopService.getOrderById(id));
+        }
+
+    }
+
+
 }

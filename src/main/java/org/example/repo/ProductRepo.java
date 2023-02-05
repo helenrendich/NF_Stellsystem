@@ -9,29 +9,32 @@ public class ProductRepo {
 
 
 
-   private List<Product> productsList= new ArrayList<>();
+   private List<Product> products = new ArrayList<>();
 
 
+  // Constructor
    public ProductRepo() {
-      productsList.add(new Product(1, "cheese"));
-      productsList.add(new Product(2, "bread"));
-      productsList.add(new Product(3, "milk"));
-      productsList.add(new Product(4, "coffee"));
-      productsList.add(new Product(5, "tea"));
+      products.add(new Product(1, "cheese"));
+      products.add(new Product(2, "bread"));
+      products.add(new Product(3, "milk"));
+      products.add(new Product(4, "coffee"));
+      products.add(new Product(5, "tea"));
    }
 
-   public List<Product> getProductsList() {
-      return productsList;
+   // Getter and Setter
+   public List<Product> getProducts() {
+      return products;
    }
 
-   public void setProductsList(List<Product> productsList) {
-      this.productsList = productsList;
+   public void setProducts(List<Product> products) {
+      this.products = products;
    }
+
 
    @Override
    public String toString() {
       return "ProductRepo{" +
-              "productsList=" + productsList +
+              "productsList=" + products +
               '}';
    }
 
